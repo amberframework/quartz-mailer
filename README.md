@@ -1,5 +1,7 @@
 # Quartz-Mailer
 
+[![Build Status](https://travis-ci.org/Amber-Crystal/Quartz-Mailer.svg?branch=master)](https://travis-ci.org/Amber-Crystal/Quartz-Mailer)
+
 A library to get started in sending and receiving emails from and to your Crystal application
 
 ## Installation
