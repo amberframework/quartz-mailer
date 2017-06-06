@@ -1,0 +1,19 @@
+name: quartz-mailer
+version: 0.1.0
+
+crystal: 0.22.0
+
+license: MIT
+
+dependencies:
+  kilt:
+    github: jeromegn/kilt
+    version: ~> 0.3.3
+
+  smtp:
+    github: raydf/smtp.cr
+    branch: master
+
+development_dependencies:
+  expect:
+    github: dukex/expect.cr
