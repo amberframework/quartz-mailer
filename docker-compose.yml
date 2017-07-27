@@ -6,5 +6,3 @@ services:
     working_dir: /app/user
     environment:
       SMTP_URL: localhost:25
-    volumes:
-      - '.:/app/user'
