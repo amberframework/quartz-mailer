@@ -1,6 +1,6 @@
 require "spec"
 require "expect"
-require "../src/quartz-mailer"
+require "../src/quartz_mailer"
 
 class TestMailer < Quartz::Mailer
   def initialize
