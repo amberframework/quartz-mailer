@@ -1,4 +1,4 @@
-name: quartz-mailer
+name: quartz_mailer
 version: v0.2.0
 
 crystal: 0.22.0
