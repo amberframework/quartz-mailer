@@ -10,14 +10,14 @@ Add this to your application's `shard.yml`:
 
 ```yaml
 dependencies:
-  quartz-mailer:
-    github: amber-crystal/quartz-mailer
+  quartz_mailer:
+    github: amberframework/quartz-mailer
 ```
 
 ## Usage
 
 ```crystal
-require "quartz-mailer"
+require "quartz_mailer"
 ```
 
 The mailer has the ability to set the `from`, `to`, `cc`, `bcc`, `subject` and `body`.
