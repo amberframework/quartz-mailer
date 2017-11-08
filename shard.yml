@@ -1,14 +1,14 @@
 name: quartz_mailer
 version: 0.2.0
 
-crystal: 0.22.0
+crystal: 0.23.1
 
 license: MIT
 
 dependencies:
   kilt:
     github: jeromegn/kilt
-    version: ~> 0.3.3
+    version: ~> 0.4.0
 
   smtp:
     github: raydf/smtp.cr
