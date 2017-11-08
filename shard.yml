@@ -12,7 +12,7 @@ dependencies:
 
   smtp:
     github: raydf/smtp.cr
-    branch: master
+    version: ~> 0.1
 
 development_dependencies:
   expect:
