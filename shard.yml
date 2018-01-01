@@ -1,7 +1,7 @@
 name: quartz_mailer
 version: 0.3.0
 
-crystal: 0.23.1
+crystal: 0.24.1
 
 license: MIT
 
@@ -11,8 +11,8 @@ dependencies:
     version: ~> 0.4.0
 
   smtp:
-    github: raydf/smtp.cr
-    version: ~> 0.2.0
+    github: amberframework/smtp.cr
+    version: ~> 0.3.0
 
 development_dependencies:
   expect:
