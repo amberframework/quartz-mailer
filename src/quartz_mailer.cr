@@ -9,7 +9,8 @@ class Quartz::Mailer
     if config.smtp_enabled
       EMail::Sender.new(
         config.smtp_address, config.smtp_port,
-        use_tls: config.use_ssl
+        use_tls: config.use_ssl,
+        logger: config.logger
       ).start do
         enqueue message.to_email
       end
