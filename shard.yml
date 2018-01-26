@@ -13,7 +13,3 @@ dependencies:
   email:
     github: arcage/crystal-email
     version: ~> 0.2.4
-
-development_dependencies:
-  expect:
-    github: dukex/expect.cr
