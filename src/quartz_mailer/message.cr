@@ -3,14 +3,14 @@ require "email"
 class Quartz::Message
   alias Address = EMail::Address
 
-  property from : Address?
-  property to   = [] of Address
-  property cc   = [] of Address
-  property bcc  = [] of Address
+  getter _from : Address?
+  getter _to   = [] of Address
+  getter _cc   = [] of Address
+  getter _bcc  = [] of Address
 
-  property subject = ""
-  property text = ""
-  property html = ""
+  getter _subject = ""
+  getter _text = ""
+  getter _html = ""
 
   def self.address(email : String)
     Address.new email
@@ -21,83 +21,76 @@ class Quartz::Message
   end
 
   def from(email : String) : Nil
-    @from = Message.address email
+    from Message.address email
   end
 
   def from(name : String, email : String) : Nil
-    @from = Message.address name, email
+    from Message.address name, email
   end
 
-  def from(@from : Address)
+  def from(@_from : Address)
   end
 
+  {% for destination_field in [:to, :cc, :bcc] %}
+    {% destination_field = destination_field.id %}
 
-  def bcc(email : String) : Nil
-    @bcc << Message.address email
+    def {{ destination_field }}(email : String) : Nil
+      @_{{ destination_field }} << Message.address email
+    end
+
+    def {{ destination_field }}(name : String, email : String) : Nil
+      @_{{ destination_field }} << Message.address name, email
+    end
+
+    def {{ destination_field }}(address : Address) : Nil
+      @_{{ destination_field }} << address
+    end
+
+    def {{ destination_field }}(addresses : Array(Address)) : Nil
+      addresses.each do |address|
+        {{ destination_field }} address
+      end
+    end
+  {% end %}
+
+  def subject(@_subject : String) : Nil
   end
 
-  def bcc(name : String, email : String) : Nil
-    @bcc << Message.address name, email
+  def text(@_text : String) : Nil
   end
 
-
-
-  def cc(email : String) : Nil
-    @cc << Message.address email
-  end
-
-  def cc(name : String, email : String) : Nil
-    @cc << Message.address name, email
-  end
-
-
-
-  def to(email : String) : Nil
-    @to << Message.address email
-  end
-
-  def to(name : String, email : String) : Nil
-    @to << Message.address name, email
-  end
-
-  def subject(@subject : String) : Nil
-  end
-
-  def text(@text : String) : Nil
-  end
-
-  def html(@html : String) : Nil
+  def html(@_html : String) : Nil
   end
 
   # for backwards compatibility
-  def body(@text : String) : Nil
+  def body(@_text : String) : Nil
   end
 
   def to_email
     EMail::Message.new.tap do |email|
-      email.subject @subject
+      email.subject @_subject
 
-      if sender = @from
+      if sender = @_from
         email.from sender
       end
 
-      unless @text.blank?
-        email.message @text
+      unless @_text.blank?
+        email.message @_text
       end
 
-      unless @html.blank?
-        email.message_html @html
+      unless @_html.blank?
+        email.message_html @_html
       end
 
-      @to.each do |person|
+      @_to.each do |person|
         email.to person
       end
 
-      @cc.each do |person|
+      @_cc.each do |person|
         email.cc person
       end
 
-      @bcc.each do |person|
+      @_bcc.each do |person|
         email.bcc person
       end
     end
