@@ -7,7 +7,7 @@ module Quartz
     property logger : Logger
 
     def initialize
-      @logger = Logger.new nil
+      @logger = Logger.new STDOUT
     end
   end
 
