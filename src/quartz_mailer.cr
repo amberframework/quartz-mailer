@@ -18,7 +18,6 @@ class Quartz::Mailer
       puts "SMTP Disabled, not actually sending email"
     end
 
-  # TODO this doesn't actually stop the failure from killing the server
   rescue e : EMail::Error::MessageError
     puts "Email message couldn't be delivered."
     puts e.message
