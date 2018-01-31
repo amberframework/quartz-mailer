@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/amberframework/quartz-mailer.svg?branch=master)](https://travis-ci.org/amberframework/quartz-mailer)
 
-A library to get started in sending and receiving emails from and to your Crystal application
+A library to send emails from your Crystal application.
 
 ## Installation
 
@@ -20,29 +20,28 @@ dependencies:
 require "quartz_mailer"
 ```
 
-The mailer has the ability to set the `from`, `to`, `cc`, `bcc`, `subject` and `body`.
-You may use the `render` helper to create the body of the email.
+The mailer has the ability to set the `from`, `to`, `cc`, `bcc`, and `subject` as well as both `text` and `html` body formats.
+
+A `render` helper provides friendly markup rendering with [jeromegn/kilt](https://github.com/jeromegn/kilt).
 
 ```crystal
-class WelcomeMailer < Quartz::Mailer
-  def initialize
-    super
-    from "Amber Crystal", "info@ambercr.io"
+class WelcomeMailer < Quartz::Composer
+  def sender
+    address email: "info@amberframework.org", name: "Amber"
   end
 
-  def deliver(name: String, email: String)
+  def initialize(name : String, email : String)
     to name: name, email: email
     subject "Welcome to Amber"
-    body render("mailers/welcome_mailer.slang", "mailer.slang")
-    super()
+    text render("mailers/welcome_mailer.text.ecr")
+    html render("mailers/welcome_mailer.html.slang", "mailer-layout.html.slang")
   end
 end
 ```
 
 To delivery a new email:
 ```crystal
-mailer = WelcomeMailer.new
-mailer.deliver(name, email)
+WelcomeMailer.new(name, email).deliver
 ```
 
 ## Contributing
