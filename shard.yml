@@ -10,10 +10,6 @@ dependencies:
     github: jeromegn/kilt
     version: ~> 0.4.0
 
-  smtp:
-    github: amberframework/smtp.cr
-    version: ~> 0.3.0
-
-development_dependencies:
-  expect:
-    github: dukex/expect.cr
+  email:
+    github: arcage/crystal-email
+    version: ~> 0.2.4
