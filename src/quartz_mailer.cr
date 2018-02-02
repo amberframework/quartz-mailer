@@ -7,7 +7,7 @@ class Quartz::Mailer
     config = Quartz.config
 
     unless config.smtp_enabled
-      puts "SMTP Disabled, not actually sending email"
+      config.logger.warn "SMTP Disabled, not actually sending email."
       return
     end
 
