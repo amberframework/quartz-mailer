@@ -6,21 +6,39 @@ class Quartz::Mailer
   def self.deliver(message : Message)
     config = Quartz.config
 
-    if config.smtp_enabled
-      EMail::Sender.new(
-        config.smtp_address, config.smtp_port,
-        use_tls: config.use_ssl,
-        logger: config.logger
-      ).start do
-        enqueue message.to_email
-      end
-    else
+    unless config.smtp_enabled
       puts "SMTP Disabled, not actually sending email"
+      return
     end
 
-  rescue e : EMail::Error::MessageError
-    puts "Email message couldn't be delivered."
-    puts e.message
+    if config.use_authentication
+      connect_and_send(
+        message,
+        config.smtp_address,
+        config.smtp_port,
+        use_tls: config.use_tls,
+        logger: config.logger,
+        auth: { config.username, config.password },
+      )
+    else
+      connect_and_send(
+        message,
+        config.smtp_address,
+        config.smtp_port,
+        use_tls: config.use_tls,
+        logger: config.logger
+      )
+    end
+
+  end
+
+  private def self.connect_and_send(message : Message, smtp_address : String, smtp_port : Int32, **connection_options)
+    EMail::Sender.new(
+      smtp_address, smtp_port,
+      **connection_options
+    ).start do
+      enqueue message.to_email
+    end
   end
 end
 
