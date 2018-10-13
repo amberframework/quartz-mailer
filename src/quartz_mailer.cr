@@ -18,7 +18,8 @@ class Quartz::Mailer
         config.smtp_port,
         use_tls: config.use_tls,
         logger: config.logger,
-        auth: { config.username, config.password },
+        auth: {config.username, config.password},
+        openssl_verify_mode: config.openssl_verify_mode
       )
     else
       connect_and_send(
@@ -26,10 +27,10 @@ class Quartz::Mailer
         config.smtp_address,
         config.smtp_port,
         use_tls: config.use_tls,
-        logger: config.logger
+        openssl_verify_mode: config.openssl_verify_mode,
+        logger: config.logger,
       )
     end
-
   end
 
   private def self.connect_and_send(message : Message, smtp_address : String, smtp_port : Int32, **connection_options)

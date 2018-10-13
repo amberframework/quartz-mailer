@@ -1,13 +1,14 @@
 module Quartz
   class Config
     property smtp_address = "127.0.0.1"
-    getter   smtp_port    = 1025
+    getter smtp_port = 1025
 
     property! username : String?
     property! password : String?
 
     property use_authentication = false
     property use_tls = false
+    property openssl_verify_mode : String?
     property smtp_enabled = false
 
     property logger : Logger
