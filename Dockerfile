@@ -4,7 +4,7 @@ WORKDIR /app/user
 
 ADD . /app/user
 
-RUN crystal deps
+RUN shards install
 
 ENV SMTP_URL localhost:25
 
