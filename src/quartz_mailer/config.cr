@@ -8,7 +8,7 @@ module Quartz
 
     property use_authentication = false
     property use_tls = false
-    property openssl_verify_mode : String?
+    property openssl_verify_mode : OpenSSL::SSL::VerifyMode?
     property smtp_enabled = false
 
     property logger : Logger
