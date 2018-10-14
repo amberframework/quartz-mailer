@@ -91,7 +91,6 @@ describe Quartz::Config do
       happy_logger = Logger.new nil
       user = "me"
       password = "secrets"
-      verification_mode = "none"
 
       Quartz.reset_config
 
@@ -104,8 +103,8 @@ describe Quartz::Config do
       Quartz.config.use_tls = true
       Quartz.config.use_tls.should eq true
 
-      Quartz.config.openssl_verify_mode = verification_mode
-      Quartz.config.openssl_verify_mode.should eq "none"
+      Quartz.config.openssl_verify_mode = :none
+      Quartz.config.openssl_verify_mode.should eq OpenSSL::SSL::VerifyMode::None
 
       Quartz.config.smtp_enabled = true
       Quartz.config.smtp_enabled.should be_true
