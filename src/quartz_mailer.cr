@@ -1,8 +1,6 @@
 require "email"
 
 class Quartz::Mailer
-  VERSION = "0.5.1"
-
   def self.deliver(message : Message)
     config = Quartz.config
 
