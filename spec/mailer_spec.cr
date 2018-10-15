@@ -2,7 +2,7 @@ require "./spec_helper"
 
 describe Quartz::Mailer do
   it "has a version" do
-    Quartz::Mailer::VERSION.should be_a String
+    Quartz::VERSION.should be_a String
   end
 
   context "deliver" do
@@ -16,4 +16,3 @@ describe Quartz::Mailer do
     end
   end
 end
-
