@@ -31,7 +31,7 @@ class WelcomeMailer < Quartz::Composer
   end
 
   def initialize(name : String, email : String)
-    to name: name, email: email
+    to name: name, email: email # Can be called multiple times to add more recipients
     subject "Welcome to Amber"
     text render("mailers/welcome_mailer.text.ecr")
     html render("mailers/welcome_mailer.html.slang", "mailer-layout.html.slang")
@@ -43,6 +43,37 @@ To deliver a new email:
 ```crystal
 WelcomeMailer.new(name, email).deliver
 ```
+
+## Multiple Recipient Example:
+
+```crystal
+class MultipleRecipientMailer < Quartz::Composer
+  def sender
+    address email: "info@amberframework.org", name: "Amber"
+  end
+
+  def initialize(to_emails : Array(String), cc_emails = [] of String, bcc_emails = [] of String)
+    to_emails.each do |email|
+      to email
+    end
+
+    cc_emails.each do |email|
+      cc email
+    end
+
+    bcc_emails.each do |email|
+      bcc email
+    end
+
+    subject "Welcome to Amber"
+    text render("mailers/welcome_mailer.text.ecr")
+    html render("mailers/welcome_mailer.html.slang", "mailer-layout.html.slang")
+  end
+end
+
+MultipleRecipientMailer.new(email_addrs, cc_email_addrs, bcc_email_addrs).deliver
+```
+
 
 ## Contributing
 
