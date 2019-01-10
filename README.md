@@ -39,7 +39,7 @@ class WelcomeMailer < Quartz::Composer
 end
 ```
 
-To delivery a new email:
+To deliver a new email:
 ```crystal
 WelcomeMailer.new(name, email).deliver
 ```
