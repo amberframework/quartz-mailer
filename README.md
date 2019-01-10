@@ -31,7 +31,7 @@ class WelcomeMailer < Quartz::Composer
   end
 
   def initialize(name : String, email : String)
-    to name: name, email: email
+    to name: name, email: email # Can be called multiple times to add more recipients
     subject "Welcome to Amber"
     text render("mailers/welcome_mailer.text.ecr")
     html render("mailers/welcome_mailer.html.slang", "mailer-layout.html.slang")
