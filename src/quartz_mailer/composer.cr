@@ -6,7 +6,7 @@ class Quartz::Composer
 
   @message = Message.new
 
-  delegate :to, :subject, :text, :html, :body, to: @message
+  delegate :to, :cc, :bcc, :subject, :text, :html, :body, to: @message
   delegate :address, to: Message
 
   def deliver
