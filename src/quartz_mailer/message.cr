@@ -51,6 +51,28 @@ class Quartz::Message
         {{ destination_field }} address
       end
     end
+
+    {% remove_method = "remove_#{destination_field}_recipient".id %}
+
+    def {{ remove_method }}(*, email : String)
+      @_{{destination_field}}.reject!{|x| x.addr == email}
+    end
+
+    def {{ remove_method }}(email : String)
+      @_{{destination_field}}.reject!{|x| x.addr == email}
+    end
+
+    def {{ remove_method }}(name : String, email : String)
+      @_{{destination_field}}.reject!{|x| x.name == name && x.addr == email}
+    end
+
+    def {{ remove_method }}(address : Address)
+      @_{{destination_field}}.reject!{|x| x.name == address.name && x.addr == address.addr}
+    end
+
+    def {{ remove_method }}(addresses : Array(Address))
+      @_{{destination_field}}.reject!{|x| addresses.any?{|y| x.name == y.name && x.addr == y.addr}}
+    end
   {% end %}
 
   def subject(@_subject : String) : Nil
