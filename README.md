@@ -44,6 +44,13 @@ To deliver a new email:
 WelcomeMailer.new(name, email).deliver
 ```
 
+To remove a recipient:
+```crystal
+remove_to_recipient email: "to@foobar.com"
+remove_cc_recipient email: "cc@foobar.com"
+remove_bcc_recipient email: "bcc@foobar.com"
+```
+
 ## Multiple Recipient Example:
 
 ```crystal

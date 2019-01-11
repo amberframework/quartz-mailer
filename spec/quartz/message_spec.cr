@@ -55,6 +55,7 @@ describe Quartz::Message do
   context "destination" do
     {% for destination in ["to", "cc", "bcc"] %}
       {% destination = destination.id %}
+
       it "{{ destination }} allows setting destinations without name" do
         message = build
         message.{{ destination }} email
@@ -96,6 +97,72 @@ describe Quartz::Message do
         message._{{ destination }}.first.tap do |email_address|
           email_address.addr.should eq email
           email_address.name.should eq name
+        end
+      end
+
+      {% remove_method = "remove_#{destination}_recipient".id %}
+
+      it "{{ remove_method }} allows removing destinations without name" do
+        message = build
+
+        message.{{ destination }} name: name, email: email
+        message.{{ destination }} name: name2, email: email2
+
+        message._{{ destination }}.size.should eq 2
+
+        message.{{ remove_method }} email
+        message._{{ destination }}.size.should eq 1
+        message._{{ destination }}.first.addr.should eq email2
+      end
+
+      it "{{ remove_method }} allows removing destinations with name" do
+        message = build
+
+        message.{{ destination }} name: name, email: email
+        message.{{ destination }} name: name2, email: email2
+
+        message._{{ destination }}.size.should eq 2
+
+        message.{{ remove_method }} name: name, email: email
+        message._{{ destination }}.size.should eq 1
+        message._{{ destination }}.first.addr.should eq email2
+        message._{{ destination }}.first.name.should eq name2
+      end
+
+      it "{{ remove_method }} allows removing destinations by array" do
+        message = build
+
+        message.{{ destination }} [address, address2]
+        message._{{ destination }}.size.should eq 2
+
+        message.{{ remove_method }} [address2]
+        message._{{ destination }}.size.should eq 1
+
+        message._{{ destination }}[0].tap do |email_address|
+          email_address.addr.should eq email
+          email_address.name.should eq name
+        end
+
+        message.{{ destination }} [address2]
+        message._{{ destination }}.size.should eq 2
+
+        message.{{ remove_method }} [address, address2]
+        message._{{ destination }}.size.should eq 0
+      end
+
+      it "{{ remove_method }} allows removing destination by named parameter" do
+        message = build
+
+        message.{{ destination }} name: name, email: email
+        message.{{ destination }} name: name2, email: email2
+        message._{{ destination }}.size.should eq 2
+
+        message.{{ remove_method }} name: name, email: email
+        message._{{ destination }}.size.should eq 1
+
+        message._{{ destination }}[0].tap do |email_address|
+          email_address.addr.should eq email2
+          email_address.name.should eq name2
         end
       end
     {% end %}
