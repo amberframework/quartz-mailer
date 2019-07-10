@@ -11,6 +11,7 @@ address2 = Quartz::Message.address name2, email2
 subject = "hello"
 text = "this is my email"
 html = "<h1>this is my email</h1>"
+header = ["X-Custom-Header", "Noice!"]
 
 def build
   Quartz::Message.new
@@ -195,6 +196,15 @@ describe Quartz::Message do
       message = build
       message.html html
       message._html.should eq html
+    end
+  end
+
+  context "custom header" do
+    it "allows setting a custom header" do
+      message = build
+      message.header header[0], header[1]
+      message._headers.size.should eq 1
+      message._headers["X-Custom-Header"].should eq "Noice!"
     end
   end
 

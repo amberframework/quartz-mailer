@@ -20,7 +20,7 @@ dependencies:
 require "quartz_mailer"
 ```
 
-The mailer has the ability to set the `from`, `to`, `cc`, `bcc`, and `subject` as well as both `text` and `html` body formats.
+The mailer has the ability to set the `from`, `to`, `cc`, `bcc`, and `subject` as well as both `text` and `html` body formats. You can also add custom headers using `header` method.
 
 A `render` helper provides friendly markup rendering with [jeromegn/kilt](https://github.com/jeromegn/kilt).
 
@@ -33,6 +33,7 @@ class WelcomeMailer < Quartz::Composer
   def initialize(name : String, email : String)
     to name: name, email: email # Can be called multiple times to add more recipients
     subject "Welcome to Amber"
+    header "X-Custom-Header", "value" # Can be called multiple times to add more custom headers
     text render("mailers/welcome_mailer.text.ecr")
     html render("mailers/welcome_mailer.html.slang", "mailer-layout.html.slang")
   end
@@ -59,7 +60,7 @@ class MultipleRecipientMailer < Quartz::Composer
     address email: "info@amberframework.org", name: "Amber"
   end
 
-  def initialize(to_emails : Array(String), cc_emails = [] of String, bcc_emails = [] of String)
+  def initialize(to_emails : Array(String), cc_emails = [] of String, bcc_emails = [] of String, headers = [] of Hash(String, String))
     to_emails.each do |email|
       to email
     end
@@ -72,6 +73,10 @@ class MultipleRecipientMailer < Quartz::Composer
       bcc email
     end
 
+    headers.each do |name, value|
+      header name, value
+    end
+
     subject "Welcome to Amber"
     text render("mailers/welcome_mailer.text.ecr")
     html render("mailers/welcome_mailer.html.slang", "mailer-layout.html.slang")
@@ -80,7 +85,6 @@ end
 
 MultipleRecipientMailer.new(email_addrs, cc_email_addrs, bcc_email_addrs).deliver
 ```
-
 
 ## Contributing
 

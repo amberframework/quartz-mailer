@@ -4,9 +4,10 @@ class Quartz::Message
   alias Address = EMail::Address
 
   getter _from : Address?
-  getter _to   = [] of Address
-  getter _cc   = [] of Address
-  getter _bcc  = [] of Address
+  getter _to = [] of Address
+  getter _cc = [] of Address
+  getter _bcc = [] of Address
+  getter _headers = {} of String => String
 
   getter _subject = ""
   getter _text = ""
@@ -31,7 +32,7 @@ class Quartz::Message
   def from(@_from : Address)
   end
 
-  {% for destination_field in [:to, :cc, :bcc] %}
+  {% for destination_field in [:to, :cc, :bcc, :header] %}
     {% destination_field = destination_field.id %}
 
     def {{ destination_field }}(email : String) : Nil
@@ -88,6 +89,10 @@ class Quartz::Message
   def body(@_text : String) : Nil
   end
 
+  def header(name : String, value : String) : Nil
+    @_headers[name] = value
+  end
+
   def to_email
     EMail::Message.new.tap do |email|
       email.subject @_subject
@@ -114,6 +119,10 @@ class Quartz::Message
 
       @_bcc.each do |person|
         email.bcc person
+      end
+
+      @_headers.each do |name, value|
+        email.custom_header name, value
       end
     end
   end
