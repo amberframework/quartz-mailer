@@ -60,7 +60,7 @@ class MultipleRecipientMailer < Quartz::Composer
     address email: "info@amberframework.org", name: "Amber"
   end
 
-  def initialize(to_emails : Array(String), cc_emails = [] of String, bcc_emails = [] of String, headers = [] of Hash(String, String))
+  def initialize(to_emails : Array(String), cc_emails = [] of String, bcc_emails = [] of String, headers = {} of String => String)
     to_emails.each do |email|
       to email
     end
