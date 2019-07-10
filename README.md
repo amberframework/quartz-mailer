@@ -20,7 +20,7 @@ dependencies:
 require "quartz_mailer"
 ```
 
-The mailer has the ability to set the `from`, `to`, `cc`, `bcc`, and `subject` as well as both `text` and `html` body formats. You can also add cutom headers using `header` method.
+The mailer has the ability to set the `from`, `to`, `cc`, `bcc`, and `subject` as well as both `text` and `html` body formats. You can also add custom headers using `header` method.
 
 A `render` helper provides friendly markup rendering with [jeromegn/kilt](https://github.com/jeromegn/kilt).
 
