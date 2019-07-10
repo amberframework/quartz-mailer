@@ -32,7 +32,7 @@ class Quartz::Message
   def from(@_from : Address)
   end
 
-  {% for destination_field in [:to, :cc, :bcc, :header] %}
+  {% for destination_field in [:to, :cc, :bcc] %}
     {% destination_field = destination_field.id %}
 
     def {{ destination_field }}(email : String) : Nil
