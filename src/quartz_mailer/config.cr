@@ -5,6 +5,7 @@ module Quartz
 
     property! username : String?
     property! password : String?
+    property helo_domain : String?
 
     property use_authentication = false
     property use_tls = false

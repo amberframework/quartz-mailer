@@ -16,6 +16,7 @@ class Quartz::Mailer
         config.smtp_port,
         use_tls: config.use_tls,
         logger: config.logger,
+        helo_domain: config.helo_domain,
         auth: {config.username, config.password},
         openssl_verify_mode: config.openssl_verify_mode
       )
@@ -24,6 +25,7 @@ class Quartz::Mailer
         message,
         config.smtp_address,
         config.smtp_port,
+        helo_domain: config.helo_domain,
         use_tls: config.use_tls,
         openssl_verify_mode: config.openssl_verify_mode,
         logger: config.logger,
