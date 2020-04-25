@@ -5,7 +5,7 @@ module Quartz
 
     property! username : String?
     property! password : String?
-    property helo_domain : String? # = "domain_not_configured"
+    property helo_domain : String?
 
     property use_authentication = false
     property use_tls : EMail::Client::TLSMode = EMail::Client::TLSMode::NONE
