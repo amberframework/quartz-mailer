@@ -9,26 +9,31 @@ class Quartz::Mailer
       return
     end
 
+    unless config.helo_domain
+      config.logger.warn "HELO domain not configured, not sending email."
+      return
+    end
+
     if config.use_authentication
       connect_and_send(
         message,
         config.smtp_address,
         config.smtp_port,
         use_tls: config.use_tls,
-        logger: config.logger,
-        helo_domain: config.helo_domain,
+        #logger: config.logger,
+        helo_domain: config.helo_domain.not_nil!,
         auth: {config.username, config.password},
-        openssl_verify_mode: config.openssl_verify_mode
+        #openssl_verify_mode: config.openssl_verify_mode
       )
     else
       connect_and_send(
         message,
         config.smtp_address,
         config.smtp_port,
-        helo_domain: config.helo_domain,
+        helo_domain: config.helo_domain.not_nil!,
         use_tls: config.use_tls,
-        openssl_verify_mode: config.openssl_verify_mode,
-        logger: config.logger,
+        #openssl_verify_mode: config.openssl_verify_mode,
+        #logger: config.logger,
       )
     end
   end
