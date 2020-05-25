@@ -1,11 +1,14 @@
+require "log"
 require "email"
 
 class Quartz::Mailer
+  Log = Log.for(this)
+
   def self.deliver(message : Message)
     config = Quartz.config
 
     unless config.smtp_enabled
-      config.logger.warn "SMTP Disabled, not actually sending email."
+      Log.warn { "SMTP Disabled, not actually sending email." }
       return
     end
 
@@ -15,7 +18,6 @@ class Quartz::Mailer
         config.smtp_address,
         config.smtp_port,
         use_tls: config.use_tls,
-        logger: config.logger,
         auth: {config.username, config.password},
         openssl_verify_mode: config.openssl_verify_mode
       )
@@ -26,7 +28,6 @@ class Quartz::Mailer
         config.smtp_port,
         use_tls: config.use_tls,
         openssl_verify_mode: config.openssl_verify_mode,
-        logger: config.logger,
       )
     end
   end
