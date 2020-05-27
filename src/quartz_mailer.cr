@@ -2,7 +2,7 @@ require "log"
 require "email"
 
 class Quartz::Mailer
-  Log = Log.for(this)
+  Log = Log.for(self)
 
   def self.deliver(message : Message)
     config = Quartz.config
