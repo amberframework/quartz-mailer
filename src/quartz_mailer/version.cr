@@ -1,3 +1,3 @@
 module Quartz
-  VERSION = "--help"
+  VERSION = "0.7.0"
 end
