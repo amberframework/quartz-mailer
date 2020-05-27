@@ -11,10 +11,7 @@ module Quartz
     property openssl_verify_mode : OpenSSL::SSL::VerifyMode = :peer
     property smtp_enabled = false
 
-    property logger : Logger
-
     def initialize
-      @logger = Logger.new STDOUT
     end
 
     def smtp_port=(port : String)
