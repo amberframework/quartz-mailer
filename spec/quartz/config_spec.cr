@@ -70,13 +70,6 @@ describe Quartz::Config do
     end
   end
 
-  context "logger" do
-    it "builds a default logger" do
-      Quartz.reset_config
-      Quartz.config.logger.should be_a Logger
-    end
-  end
-
   context "enable/disable" do
     it "defaults to disabled" do
       Quartz.reset_config
@@ -88,7 +81,6 @@ describe Quartz::Config do
     it "allows config settings to be changed" do
       alternate_reality = "127.1.1.1"
       mailcatcher_port = 1080
-      happy_logger = Logger.new nil
       user = "me"
       password = "secrets"
 
@@ -108,9 +100,6 @@ describe Quartz::Config do
 
       Quartz.config.smtp_enabled = true
       Quartz.config.smtp_enabled.should be_true
-
-      Quartz.config.logger = happy_logger
-      Quartz.config.logger.should eq happy_logger
 
       Quartz.config.use_authentication = true
       Quartz.config.use_authentication.should be_true
