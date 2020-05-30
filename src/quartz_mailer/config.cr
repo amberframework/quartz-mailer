@@ -5,9 +5,10 @@ module Quartz
 
     property! username : String?
     property! password : String?
+    property helo_domain : String?
 
     property use_authentication = false
-    property use_tls = false
+    property use_tls : EMail::Client::TLSMode = EMail::Client::TLSMode::NONE
     property openssl_verify_mode : OpenSSL::SSL::VerifyMode = :peer
     property smtp_enabled = false
 

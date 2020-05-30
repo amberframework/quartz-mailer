@@ -20,7 +20,7 @@ describe Quartz::Config do
 
     it "defaults to tls disabled" do
       Quartz.reset_config
-      Quartz.config.use_tls.should be_false
+      Quartz.config.use_tls.should eq EMail::Client::TLSMode::NONE
     end
 
     it "defaults to openssl_verify_mode default (:peer)" do
@@ -92,8 +92,8 @@ describe Quartz::Config do
       Quartz.config.smtp_port = mailcatcher_port
       Quartz.config.smtp_port.should eq mailcatcher_port
 
-      Quartz.config.use_tls = true
-      Quartz.config.use_tls.should eq true
+      Quartz.config.use_tls = EMail::Client::TLSMode::NONE
+      Quartz.config.use_tls.should eq EMail::Client::TLSMode::NONE
 
       Quartz.config.openssl_verify_mode = :none
       Quartz.config.openssl_verify_mode.should eq OpenSSL::SSL::VerifyMode::NONE
