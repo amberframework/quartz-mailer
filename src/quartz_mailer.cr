@@ -2,7 +2,7 @@ require "log"
 require "email"
 
 class Quartz::Mailer
-  Log = Log.for(self)
+  Log = ::Log.for(self)
 
   def self.deliver(message : Message)
     config = Quartz.config
@@ -13,7 +13,7 @@ class Quartz::Mailer
     end
 
     unless config.helo_domain
-      config.logger.warn "HELO domain not configured, not sending email."
+      Log.warn { "HELO domain not configured, not sending email." }
       return
     end
 
