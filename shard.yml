@@ -1,7 +1,7 @@
 name: quartz_mailer
-version: 0.7.2
+version: 0.8.0
 
-crystal: 0.33.0
+crystal: ">= 0.33.0, < 2.0.0"
 
 license: MIT
 
